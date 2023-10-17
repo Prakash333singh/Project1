@@ -3,7 +3,7 @@ import axios from "axios";
 import PaperDetails from "./Paperdetails";
 
 function App() {
-  const [paperData, setPaperData] = useState(null); // Change variable name to setPaperData
+  const [paperData, setPaperData] = useState(""); // Change variable name to setPaperData
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -26,7 +26,9 @@ function App() {
       .then((response) => {
         // Handle the successful response here
         setPaperData(response.data); // Use setPaperData to update the state
-        console.log(response.data);
+        const title = response.data.data[0].title; // Access the title
+        console.log(title);
+        setPaperData(response.data);
       })
       .catch((error) => {
         // Handle any errors here
@@ -42,10 +44,12 @@ function App() {
     return <div>Loading...</div>;
   }
 
+
   return (
     <div>
-      <PaperDetails paper={paperData} />
+      <PaperDetails paper={paperData.data[0]} />
     </div>
+
   );
 }
 
